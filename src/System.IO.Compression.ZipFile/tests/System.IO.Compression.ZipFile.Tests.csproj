@@ -35,6 +35,9 @@
     <Compile Include="ZipFile.Extract.netcoreapp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.IO.Compression.TestData" Version="$(SystemIOCompressionTestDataPackageVersion)" />
+    <!-- On OSX the Unicode file's build action property is overwritten with Compile. -->
+    <PackageReference Include="System.IO.Compression.TestData" Version="$(SystemIOCompressionTestDataPackageVersion)" GeneratePathProperty="true" />
+    <Compile Remove="$(PkgSystem_IO_Compression_TestData)\contentFiles\any\any\ZipTestData\refzipfolders\unicode\*" Condition="'$(TargetsOSX)' == 'true'" />
+    <EmbeddedFiles Remove="$(PkgSystem_IO_Compression_TestData)\contentFiles\any\any\ZipTestData\refzipfolders\unicode\*" Condition="'$(TargetsOSX)' == 'true'" />
   </ItemGroup>
 </Project>
